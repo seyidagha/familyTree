@@ -209,6 +209,32 @@ public class DatabaseModel implements PersonDAO {
 			// throw new FamilyException("error1", "parent " + date1 + " should
 			// be older than children " + date2);
 			break;
+		case 9:
+			if (date2.after(date1)) {
+				insertRelation(p1_id, p2_id, relation_id);
+				if (gender2.equals("male")) {
+					insertRelation(p2_id, p1_id, 7);
+				} else if (gender2.equals("female")) {
+					insertRelation(p2_id, p1_id, 8);
+				}
+			}
+			// else
+			// throw new FamilyException("error1", "parent " + date1 + " should
+			// be older than children " + date2);
+			break;
+		case 10:
+			if (date2.after(date1)) {
+				insertRelation(p1_id, p2_id, relation_id);
+				if (gender2.equals("male")) {
+					insertRelation(p2_id, p1_id, 7);
+				} else if (gender2.equals("female")) {
+					insertRelation(p2_id, p1_id, 8);
+				}
+			}
+			// else
+			// throw new FamilyException("error1", "parent " + date1 + " should
+			// be older than children " + date2);
+			break;
 
 		case 19:
 			insertRelation(p1_id, p2_id, relation_id);
@@ -286,7 +312,7 @@ public class DatabaseModel implements PersonDAO {
 	public List<Map<String, Object>> getAdjacentRelations(Person p) {
 		// ListMultimap<Integer, Person> myMap = ArrayListMultimap.create();
 		int id = p.getId();
-		String sql = "SELECT person2_id, relation_id FROM person_relation WHERE person1_id = ? and relation_id in (1,2,5,6,3,4,19,20)";
+		String sql = "SELECT person2_id, relation_id FROM person_relation WHERE person1_id = ?";
 		Object[] params = { id };
 		List<Map<String, Object>> result = jdbcTemplate.queryForList(sql, params);
 		// result.forEach(item -> myMap.put((int) item.get("relation_id"),

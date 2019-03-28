@@ -59,15 +59,12 @@ public class IndexController {
 	public ModelAndView index() {
 		logger.info("opening index page");
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.addObject("person1", new Person("Maria Smith", null));
-		modelAndView.addObject("person2", new Person("John Doe", null));
-		modelAndView.addObject("person3", new Person("Alex Mack", null));
+		modelAndView.addObject("person1", new Person("John Doe", null));
 		FormModel model = new FormModel();
 		model.setPerson1(new Person("Maria Smith", null));
 		model.setPerson2(new Person("John Doe", null));
 		modelAndView.addObject("people", model);
 		modelAndView.setViewName("index");
-		// return new ModelAndView("index", "person", person);
 		return modelAndView;
 	}
 
@@ -89,20 +86,13 @@ public class IndexController {
 	// }
 
 	@RequestMapping(value = "/insertPerson", method = RequestMethod.POST)
-	public ModelAndView insertPerson(@Valid @ModelAttribute("person2") Person person, BindingResult bindingResult) {
+	public ModelAndView insertPerson(@Valid @ModelAttribute("person1") Person person, BindingResult bindingResult) {
 		logger.info("insert person controller");
 		checkUserExistsValidator.validate(person, bindingResult);
 		if (bindingResult.hasErrors()) {
 			ModelAndView model = new ModelAndView();
 			model.setViewName("index");
 			model.addObject("errors1", bindingResult.getAllErrors().get(0).getDefaultMessage());
-			model.addObject("person2", person);
-			model.addObject("person1", new Person("Maria Smith", null));
-			model.addObject("person3", new Person("Alex Mack", null));
-			FormModel fmodel = new FormModel();
-			fmodel.setPerson1(new Person("Maria Smith", null));
-			fmodel.setPerson2(new Person("John Doe", null));
-			model.addObject("people", fmodel);
 			return model;
 		} else {
 			databaseModel.insert(person);
@@ -120,24 +110,13 @@ public class IndexController {
 		if (bindingResult.hasErrors()) {
 			ModelAndView model = new ModelAndView();
 			model.setViewName("index");
-			model.addObject("person2", new Person("John Doe", null));
-			model.addObject("person3", new Person("Alex Mack", null));
-			model.addObject("person1", person);
-			FormModel fmodel = new FormModel();
-			fmodel.setPerson1(new Person("Maria Smith", null));
-			fmodel.setPerson2(new Person("John Doe", null));
-			model.addObject("people", fmodel);
 			return model;
 		} else {
 			int id = databaseModel.getPersonID(person);
-			// person =
-			// databaseModel.setPersonTreeParents(databaseModel.getPersonByID(id));
-			// person = databaseModel.getTree(id, new ArrayList<Integer>());
 			List<List<Map<String, Object>>> l = databaseModel.nodesEdges(id, new ArrayList<Integer>(),
 					new ArrayList<>(), new ArrayList<>());
 			ModelAndView modelAndView = new ModelAndView();
 			modelAndView.setViewName("personTree");
-			// modelAndView.addObject("person", person);
 			modelAndView.addObject("jsonList", databaseModel.toJson(l));
 			return modelAndView;
 		}
@@ -161,11 +140,8 @@ public class IndexController {
 		if (bindingResult.hasErrors()) {
 			ModelAndView model = new ModelAndView();
 			model.setViewName("index");
+			model.addObject("person1", new Person("John Doe", null));
 			model.addObject("errors", bindingResult.getAllErrors().get(0).getDefaultMessage());
-			model.addObject("person2", new Person("John Doe", null));
-			model.addObject("person3", new Person("Alex Mack", null));
-			model.addObject("person1", new Person("Maria Smith", null));
-			model.addObject("people", people);
 			return model;
 		} else {
 			int rID = databaseModel.getRelationID(relation);
@@ -180,7 +156,7 @@ public class IndexController {
 	}
 
 	@RequestMapping(value = "/deletePerson", method = RequestMethod.POST)
-	public ModelAndView deletePerson(@ModelAttribute("person3") Person person, BindingResult bindingResult,
+	public ModelAndView deletePerson(@ModelAttribute("person1") Person person, BindingResult bindingResult,
 			HttpServletRequest request) {
 		logger.info("delete person controller");
 		int id = databaseModel.getPersonID(person);

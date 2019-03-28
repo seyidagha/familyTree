@@ -28,7 +28,7 @@
 			<div class="col-auto panel" style="padding-left: 30px">
 				<h3>Insert New Person</h3>
 				<f:form class="form-inline" action="insertPerson"
-					modelAttribute="person2">
+					modelAttribute="person1">
 
 					<f:label path="name">Person Name:</f:label>
 					<f:input path="name" type="text" />
@@ -51,6 +51,7 @@
 				</f:form>
 
 			</div>
+
 
 			<div class="col-auto panel" style="padding-left: 30px">
 				<h3>Set Relative</h3>
@@ -107,7 +108,7 @@
 			<div class="col-auto panel" style="padding-left: 30px">
 				<h3>Delete Person</h3>
 				<f:form class="form-inline" action="deletePerson"
-					modelAttribute="person3">
+					modelAttribute="person1">
 					<f:label path="name">Person Name:</f:label>
 					<f:select cssStyle="width:150px" path="name" items="${nameList}"
 						multiple="false">
