@@ -21,15 +21,6 @@ public class TestPeople {
 		Person father = new Person("John Doe", "male");
 		Date date = java.sql.Date.valueOf("1800-01-01");
 		father.setBirthDate(date);
-		// Person mother = new Person("shukufe", "female");
-		// Person son = new Person("seid", "male");
-		// son.setFather(me);
-		// Person daugher = new Person("leyla", "female");
-		// daugher.setFather(me);
-		// me.setMother(mother);
-		// me.setFather(father);
-		// me.setChildren(Arrays.asList(son, daugher));
-		// logger.info(me.toString());
 
 		logger.info("testing people");
 		ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("context.xml");
